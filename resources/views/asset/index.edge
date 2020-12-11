@@ -1,0 +1,73 @@
+@layout('master')
+
+@section('content')
+  <div class="box">
+    <div  class="row">
+    <h1 class="title">Company Assets</h1>
+    </div>
+    <div class="row justify-right">
+     <a href="/add_asset" class="btn btn-success btn-small">Add Asset <i class="fa fas-plus"></i></a>
+    </div>
+    <br/>
+    <div  class="row">
+      <table class="table is-bordered is-striped is-narrow is-fullwidth">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th>Description</th> 
+            <th>Location</th> 
+            <th>Original Value</th> 
+            <th>Current Value</th> 
+            <th>Action</th> 
+          </tr>
+        </thead>
+        <tbody>
+          @each(asset in asset)
+            <tr>
+              <td>
+                {{ ($loop.index + 1) }}
+              </td>
+              <td>
+                {{ asset.quantity }}
+              </td>
+              <td>
+                {{ asset.item }}
+              </td>
+              <td>
+                {{ asset.description }}
+              </td>
+              <td>
+                {{ asset.location }}
+              </td>
+              <td>
+                {{ asset.original_value }}
+              </td>
+              <td>
+                {{ asset.value }}
+              </td>
+              
+              <td>
+                <form action="{{ 'asset/' + asset.id + '?_method=DELETE' }}" method="POST">
+                    {{ csrfField() }}
+                  
+                    <button type="submit" class="btn btn-danger btn-outline">
+                      <span>DELETE</span>
+                      <span class="icon is-small">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                  </form>
+              </td>
+            </tr>
+          @else
+            <tr>
+              <td colspan="7" class="text-center">No asset added yet!</td>
+            </tr>
+          @endeach
+        </tbody>
+      </table>
+    </div>
+  </div>
+@endsection
